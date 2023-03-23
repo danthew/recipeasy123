@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 function Login() {
 
-    var loginName;
+    var loginEmail;
     var loginPassword;
     const [message,setMessage] = useState('');
 
@@ -20,7 +20,7 @@ function Login() {
 
     const doLogin = async event => {
         event.preventDefault();
-        var obj = {login:loginName.value,password:loginPassword.value};
+        var obj = {email:loginEmail.value,password:loginPassword.value};
         var js = JSON.stringify(obj);
         try {
             const response = await fetch(buildPath('api/login'), { 
@@ -49,7 +49,7 @@ function Login() {
         <div id="loginDiv">
         <form onSubmit={doLogin}>
             <span id="inner-title">PLEASE LOG IN</span><br />
-            <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br />
+            <input type="text" id="loginName" placeholder="Username" ref={(c) => loginEmail = c} /><br />
             <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} /><br />
             <input type="submit" id="loginButton" class="buttons" value = "Do It" onClick={doLogin} />
         </form>
