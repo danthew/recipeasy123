@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 function HomeTitle()
 {
     var pantrySearch = '';
+    var recipeSearch = '';
 
     const [message,setMessage] = useState('');
     
@@ -18,6 +19,13 @@ function HomeTitle()
         event.preventDefault();
         
         alert('search() ' + pantrySearch.value);
+    };
+
+    const doSearchRecipe = async event =>
+    {
+        event.preventDefault();
+        
+        alert('search() ' + recipeSearch.value);
     };
 
     const panButton = async event =>
@@ -67,10 +75,10 @@ function HomeTitle()
                         </div>
                         <div class="pan-gro-item">
                             <div class="pan-item" id="pan-item">
-                                <h1 class='title'>butt</h1>
+                                <h1 class='title'>pantry items</h1>
                             </div>
                             <div class="gro-item" id="gro-item">
-                                <h1 class='title'>hole</h1>
+                                <h1 class='title'>grocery items</h1>
                             </div>
                         </div>
                     </div>
@@ -79,6 +87,13 @@ function HomeTitle()
                     <div class="recipe-ui">
                         <div class="recipe-header">
                             <h1 class='title'>RECIPES</h1>
+                        </div>
+                        <div class="search">
+                            <form class="search">
+                                <input class="search-bar" id="recipeSearch" placeholder="SEARCH" ref={(c) => recipeSearch = c}/>
+                                <button class="search-button" onClick={doSearchRecipe}>SEARCH</button>
+                                <span id="recipeSearch">{message}</span>
+                            </form>
                         </div>
                         <div class="recipe-item">
 
