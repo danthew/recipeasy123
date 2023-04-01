@@ -1,10 +1,13 @@
-
 import React from 'react';
 import './App.css';
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from './pages/LoginPage';
-import HomePage from './pages/HomePage';
-function App() {
+
+import HomePage from './pages/home/HomePage';
+import LoginPage from './pages/home/login/LoginPage';
+
+function App() 
+{
   return (
     <BrowserRouter>
       <Routes>
@@ -14,4 +17,5 @@ function App() {
     </BrowserRouter>
   );
 }
+
 export default App;
