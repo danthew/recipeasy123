@@ -1,72 +1,56 @@
-//import React from 'react';
-import React, {useState} from 'react';
-import ShowablePassword from 'components/login/ShowablePassword';
+import React, { useState } from 'react';
+
 
 function Login() {
-    
-    var loginName;
+
+    var loginEmail;
     var loginPassword;
-    const [message, setMessage] = useState("");
-    const [passwordShown, setPasswordShown] = useState(false);
+    const [message,setMessage] = useState('');
 
-    const doLogin = async (event) => {
+    const app_name = 'recipeasy1234'
+    function buildPath(route) {
+        if (process.env.NODE_ENV === 'production') {
+            return 'https://' + app_name + '.herokuapp.com/' + route;
+        }
+        else {
+            return 'http://localhost:5000/' + route;
+        }
+    }
 
-        console.log("logging in!");
-
+    const doLogin = async event => {
         event.preventDefault();
-
-        let obj = {
-            email : loginName.value,
-            password : loginPassword.value
-        };
-
-        if(obj.login === "" || obj.password === "") {
-            setMessage("Please make sure the fields are not empty.");
-            return;
-        } 
-
-        let bp = require("../BuildPath.js");
-
-        let js = JSON.stringify(obj);
-        console.log(JSON.stringify(obj,null,2));
-        
+        var obj = {email:loginEmail.value,password:loginPassword.value};
+        var js = JSON.stringify(obj);
         try {
-            const response = await fetch(bp.buildPath('api/login'), {
-                method: "POST",
-                body: js,
-                headers: { "Content-Type": "application/json", 
-                            "Access-Control-Allow-Origin" : "*",
-                            "Access-Control-Allow-Methods" : "POST"},
+            const response = await fetch(buildPath('api/login'), { 
+                method:'POST',
+                body:js,
+                headers:{'Content-Type': 'application/json' }
             });
+            console.log(js);
             var res = JSON.parse(await response.text());
-            if(response.status != 201) {
-                setMessage('There was an error with your username/password input.');
-		        console.log(response.status);
+            if( res.id <= 0 ) {
+                setMessage('User/Password combination incorrect');
             }
             else {
-                var user = {
-                    // firstName: res.firstName,
-                    id: res.userId
-                };
+                var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
                 localStorage.setItem('user_data', JSON.stringify(user));
                 setMessage('');
-                console.log(localStorage.getItem('user_data'));
-                window.location.href = "/home";
+                window.location.href = '/home';
             }
         }
-        catch(e)
-        {
-            alert(e.toString());
-            return;
-        }
-    };
+    catch(e) {
+        alert(e.toString());
+        return;
+    }
+};
 
     return (
         <div id="loginDiv">
             <div className="loginText">
                 <form onSubmit={doLogin}>
                     <div id="input_text">
-                        <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br />
+                        <input type="text" id="loginName" placeholder="Username" ref={(c) => loginEmail = c} /><br />
 				    </div>
                     {/* <ShowablePassword/> */}
                     <div id="input_text">

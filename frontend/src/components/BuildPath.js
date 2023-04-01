@@ -1,9 +1,13 @@
 exports.buildPath =
-function buildPath(route) {
-    if(process.env.NODE_ENV === 'production') {
-        return 'https://us-central1-recipeasy-ec759.cloudfunctions.net/' + route;
+
+function buildPath(route)
+    {
+    if (process.env.NODE_ENV === 'production')  
+    {
+        return 'https://recipeasy1234' + '.herokuapp.com/' + route;
     }
-    else {
-        return 'http://localhost:5001/recipeasy-ec759/us-central1/' + route;
+    else
+    {
+        return 'http://localhost:5000/' + route;
     }
 }

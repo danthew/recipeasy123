@@ -1,8 +1,8 @@
 import React from 'react';
 
-import TitleBar from 'components/home/TitleBar';
-import PantryGrocery from 'components/home/PantryGrocery';
-import Recipe from 'components/home/Recipe';
+import TitleBar from '../../components/home/TitleBar';
+import PantryGrocery from '../../components/home/PantryGrocery';
+import Recipe from '../../components/home/Recipe';
 
 const HomePage = () =>
 {

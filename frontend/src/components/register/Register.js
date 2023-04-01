@@ -8,7 +8,18 @@ function Register() {
     let registerEmail;
     const [message, setMessage] = useState("");
 
-    let bp = require("../BuildPath.js");
+    var storage = require('../../tokenStorage.js');
+
+    const app_name = 'recipeasy1234'
+    function buildPath(route) {
+        if (process.env.NODE_ENV === 'production') {
+            return 'https://' + app_name + '.herokuapp.com/' + route;
+        }
+        else {
+            return 'http://localhost:5000/' + route;
+        }
+    }
+
     const [passwordShown, setPasswordShown] = useState(false);
 
     const doRegister = async (event) => {
@@ -23,23 +34,13 @@ function Register() {
             email: registerEmail.value
         }
 
-        if(obj.name === "" || obj.username === "" || obj.password === "" || obj.dob === "" || obj.email === "") {
-
-            setMessage("Please make sure the fields are not empty.");
-            return;
-        }
-        console.log(obj);
-
         let js = JSON.stringify(obj);
-        const headers = {"Content-Type": "application/json"}
 
         try {
-            const response = await fetch(bp.buildPath('api/register'), {
+            const response = await fetch(buildPath('api/register'), {
                 method: "POST",
                 body: js,
-                headers: { "Content-Type": "application/json", 
-                            "Access-Control-Allow-Origin" : "https://localhost:5001" || "https://us-central1-recipeasy-ec759.cloudfunctions.net/",
-                            "Access-Control-Allow-Methods" : "POST"},
+                headers: {'Content-Type': 'application/json' }
             })
             var res = JSON.parse(await response.text());
             if(res.id <= 0) {
